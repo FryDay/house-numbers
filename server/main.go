@@ -16,6 +16,7 @@ func main() {
 	router.HandleFunc("/time", getTime).Methods(http.MethodGet)
 	router.HandleFunc("/time", postTime).Methods(http.MethodPost)
 
+	log.Println("Listening on port 8040...")
 	log.Fatal(http.ListenAndServe(":8040", router))
 }
 
