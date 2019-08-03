@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	currentColor = NewColorFromHex("#ffffff")
+	currentColor = NewColorFromHex("#ff0000")
 )
 
 func main() {

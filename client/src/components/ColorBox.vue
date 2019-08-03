@@ -1,5 +1,7 @@
 <template>
-  <div class="colorBox" :style="{'background-color':color}"></div>
+  <div class="colorBox" :style="{'background-color':color}">
+    <h2>{{start}} - {{end}}</h2>
+  </div>
 </template>
 
 <script>
@@ -9,17 +11,30 @@ export default {
     color: {
       type: String,
       required: true
+    },
+    start: {
+      type: String,
+      required: true
+    },
+    end: {
+      type: String,
+      required: true
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+h2 {
+  margin: auto;
+}
 .colorBox {
-  display: inline-block;
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
   height: 100px;
-  outline: #000000 solid 2px;
-  margin: 60px;
-  width: 100px;
+  justify-items: center;
+  text-align: center;
+  width: 100%;
 }
 </style>
