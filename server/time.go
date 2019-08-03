@@ -6,14 +6,14 @@ import (
 
 // Time ...
 type Time struct {
-	Start time.Time `json:"start"`
-	End   time.Time `json:"end"`
+	Start string `json:"start"`
+	End   string `json:"end"`
 }
 
 // NewTime ...
 func NewTime(start, end time.Time) *Time {
 	return &Time{
-		Start: start,
-		End:   end,
+		Start: start.Format("15:04"),
+		End:   end.Format("15:04"),
 	}
 }

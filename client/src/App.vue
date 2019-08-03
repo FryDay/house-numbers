@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <ColorBox :color="currentColor" />
+    <h2>{{currentStartTime}} - {{currentEndTime}}</h2>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ export default {
   created() {
     this.fetchColor()
     this.fetchTime()
+    this.postColor('#00ff00')
   },
   data() {
     return {
@@ -38,6 +40,9 @@ export default {
 
       this.currentStartTime = data.start
       this.currentEndTime = data.end
+    },
+    async postColor(hex) {
+      await ColorRepository.post({ hex: hex })
     }
   }
 }

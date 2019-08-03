@@ -9,6 +9,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var (
+	currentColor = NewColorFromHex("#ffffff")
+)
+
 func main() {
 	router := mux.NewRouter()
 
@@ -27,14 +31,16 @@ func getColor(w http.ResponseWriter, req *http.Request) {
 	log.Println("GET /color", params)
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
-	// color := NewFromRGB(255, 255, 255)
-	color := NewFromHex("#00ff00")
-	json.NewEncoder(w).Encode(color)
+	json.NewEncoder(w).Encode(currentColor)
 }
 
 func postColor(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	log.Println("POST /color", params)
+	_ = json.NewDecoder(req.Body).Decode(currentColor)
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	json.NewEncoder(w).Encode(currentColor)
 }
 
 func getTime(w http.ResponseWriter, req *http.Request) {

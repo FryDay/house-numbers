@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -12,8 +13,8 @@ type Color struct {
 	Hex string `json:"hex"`
 }
 
-// NewFromHex ...
-func NewFromHex(hex string) *Color {
+// NewColorFromHex ...
+func NewColorFromHex(hex string) *Color {
 	color := &Color{
 		Hex: hex,
 	}
@@ -22,12 +23,24 @@ func NewFromHex(hex string) *Color {
 	return color
 }
 
-// NewFromRGB ...
-func NewFromRGB(r, g, b uint8) *Color {
+// NewColorFromRGB ...
+func NewColorFromRGB(r, g, b uint8) *Color {
 	return &Color{
 		R:   r,
 		G:   g,
 		B:   b,
 		Hex: fmt.Sprintf("#%.2x%.2x%.2x", r, g, b),
 	}
+}
+
+// UnmarshalJSON ...
+func (color *Color) UnmarshalJSON(data []byte) error {
+	hex := &struct {
+		Hex string `json:"hex"`
+	}{}
+	if err := json.Unmarshal(data, hex); err != nil {
+		return err
+	}
+	*color = *NewColorFromHex(hex.Hex)
+	return nil
 }
