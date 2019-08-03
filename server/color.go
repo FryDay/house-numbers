@@ -11,6 +11,7 @@ type Color struct {
 	G   uint8  `json:"g"`
 	B   uint8  `json:"b"`
 	Hex string `json:"hex"`
+	Xeh string `json:"xeh"`
 }
 
 // NewColorFromHex ...
@@ -19,6 +20,7 @@ func NewColorFromHex(hex string) *Color {
 		Hex: hex,
 	}
 	fmt.Sscanf(hex, "#%02x%02x%02x", &color.R, &color.G, &color.B)
+	color.Xeh = fmt.Sprintf("#%.2x%.2x%.2x", 255-color.R, 255-color.G, 255-color.B)
 
 	return color
 }
@@ -30,6 +32,7 @@ func NewColorFromRGB(r, g, b uint8) *Color {
 		G:   g,
 		B:   b,
 		Hex: fmt.Sprintf("#%.2x%.2x%.2x", r, g, b),
+		Xeh: fmt.Sprintf("#%.2x%.2x%.2x", 255-r, 255-g, 255-b),
 	}
 }
 

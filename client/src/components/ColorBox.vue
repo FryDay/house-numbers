@@ -1,6 +1,6 @@
 <template>
   <div class="colorBox" :style="{'background-color':color}">
-    <h2>{{start}} - {{end}}</h2>
+    <h2 :style="{'color':oppColor}">{{start}} - {{end}}</h2>
   </div>
 </template>
 
@@ -9,6 +9,10 @@ export default {
   name: 'colorBox',
   props: {
     color: {
+      type: String,
+      required: true
+    },
+    oppColor: {
       type: String,
       required: true
     },

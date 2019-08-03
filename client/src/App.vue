@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <ColorBox :color="currentColor" :start="currentStartTime" :end="currentEndTime" />
+    <ColorBox
+      :color="currentColor"
+      :oppColor="oppositeColor"
+      :start="currentStartTime"
+      :end="currentEndTime"
+    />
     <chrome-picker @input="updateValue" :value="currentColor" />
   </div>
 </template>
@@ -22,11 +27,11 @@ export default {
   created() {
     this.fetchColor()
     this.fetchTime()
-    // this.postColor('#00ff00')
   },
   data() {
     return {
       currentColor: '',
+      oppositeColor: '',
       currentStartTime: '',
       currentEndTime: ''
     }
@@ -36,6 +41,7 @@ export default {
       const { data } = await ColorRepository.get()
 
       this.currentColor = data.hex
+      this.oppositeColor = data.xeh
     },
     async fetchTime() {
       const { data } = await TimeRepository.get()
@@ -43,12 +49,11 @@ export default {
       this.currentStartTime = data.start
       this.currentEndTime = data.end
     },
-    async postColor(hex) {
-      await ColorRepository.post({ hex: hex })
-    },
-    updateValue(value) {
-      this.currentColor = value.hex
-      this.postColor(this.currentColor)
+    async updateValue(value) {
+      const { data } = await ColorRepository.post({ hex: value.hex })
+
+      this.currentColor = data.hex
+      this.oppositeColor = data.xeh
     }
   }
 }
