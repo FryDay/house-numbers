@@ -89,16 +89,13 @@ html {
   background-color: #a9a9a9 !important;
   box-shadow: none !important;
   width: 100% !important;
-  .vc-chrome-body {
-    padding: 0px !important;
-  }
   .vc-alpha {
     display: none !important;
   }
-  .vc-chrome-color-wrap {
-    display: none !important;
+  .vc-chrome-body {
+    padding: 0px !important;
   }
-  .vc-chrome-saturation-wrap {
+  .vc-chrome-color-wrap {
     display: none !important;
   }
   .vc-chrome-fields-wrap {
@@ -107,11 +104,14 @@ html {
   .vc-chrome-hue-wrap {
     height: 100% !important;
   }
-  .vc-hue-picker {
-    margin-top: 2px !important;
-    height: 50px !important;
+  .vc-chrome-saturation-wrap {
+    display: none !important;
   }
   .vc-chrome-sliders {
+    height: 50px !important;
+  }
+  .vc-hue-picker {
+    margin-top: 2px !important;
     height: 50px !important;
   }
 }
