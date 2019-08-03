@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -23,6 +25,11 @@ func main() {
 func getColor(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	log.Println("GET /color", params)
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	// color := NewFromRGB(255, 255, 255)
+	color := NewFromHex("#00ff00")
+	json.NewEncoder(w).Encode(color)
 }
 
 func postColor(w http.ResponseWriter, req *http.Request) {
@@ -33,6 +40,10 @@ func postColor(w http.ResponseWriter, req *http.Request) {
 func getTime(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	log.Println("GET /time", params)
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	time := NewTime(time.Now(), time.Now().Add(time.Hour))
+	json.NewEncoder(w).Encode(time)
 }
 
 func postTime(w http.ResponseWriter, req *http.Request) {

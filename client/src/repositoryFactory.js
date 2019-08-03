@@ -2,7 +2,7 @@ import ColorRepository from './colorRepository'
 import TimeRepository from './timeRepository'
 
 const repositories = {
-  colors: ColorRepository,
+  color: ColorRepository,
   time: TimeRepository
 }
 
