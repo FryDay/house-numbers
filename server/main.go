@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	currentColor = NewColor("#ff0000")
+	currentColor = NewColor(0)
 )
 
 func main() {
@@ -27,25 +27,22 @@ func main() {
 }
 
 func getColor(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	log.Println("GET /color", params)
+	log.Println("GET /color")
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(currentColor)
 }
 
 func postColor(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	log.Println("POST /color", params)
-	_ = json.NewDecoder(req.Body).Decode(currentColor)
+	log.Println("POST /color")
+	json.NewDecoder(req.Body).Decode(currentColor)
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(currentColor)
 }
 
 func getTime(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	log.Println("GET /time", params)
+	log.Println("GET /time")
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	time := NewTime(time.Now(), time.Now().Add(time.Hour))
@@ -53,6 +50,5 @@ func getTime(w http.ResponseWriter, req *http.Request) {
 }
 
 func postTime(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	log.Println("POST /time", params)
+	log.Println("POST /time")
 }

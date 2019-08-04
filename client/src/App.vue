@@ -6,13 +6,13 @@
       :start="currentStartTime"
       :end="currentEndTime"
     />
-    <chrome-picker @input="updateValue" :value="currentColor" />
+    <color-picker v-bind="hsl" @change="changeColor" @input="updateHSL"></color-picker>
   </div>
 </template>
 
 <script>
 import ColorBox from './components/ColorBox.vue'
-import { Chrome } from 'vue-color'
+import ColorPicker from '@radial-color-picker/vue-color-picker'
 import { RepositoryFactory } from './repositoryFactory'
 
 const ColorRepository = RepositoryFactory.get('color')
@@ -22,7 +22,7 @@ export default {
   name: 'app',
   components: {
     ColorBox,
-    'chrome-picker': Chrome
+    ColorPicker
   },
   created() {
     this.fetchColor()
@@ -33,7 +33,11 @@ export default {
       currentColor: '',
       oppositeColor: '',
       currentStartTime: '',
-      currentEndTime: ''
+      currentEndTime: '',
+      hsl: {
+        hue: 0,
+        variant: 'persistent'
+      }
     }
   },
   methods: {
@@ -49,8 +53,15 @@ export default {
       this.currentStartTime = data.start
       this.currentEndTime = data.end
     },
+    updateHSL(hue) {
+      this.hsl.hue = hue
+    },
+    changeColor() {
+      this.updateValue(this.hsl.hue)
+    },
     async updateValue(value) {
-      const { data } = await ColorRepository.post({ hex: value.hex })
+      console.log(value.toFixed(0))
+      const { data } = await ColorRepository.post({ hue: value.toFixed(0) })
 
       this.currentColor = data.hex
       this.oppositeColor = data.xeh
@@ -60,6 +71,8 @@ export default {
 </script>
 
 <style lang="less">
+@import '~@radial-color-picker/vue-color-picker/dist/vue-color-picker.min.css';
+
 html {
   height: 100% !important;
   margin: 0 !important;
@@ -84,35 +97,5 @@ html {
   margin: 0 !important;
   text-align: center;
   width: 100% !important;
-}
-.vc-chrome {
-  background-color: #a9a9a9 !important;
-  box-shadow: none !important;
-  width: 100% !important;
-  .vc-alpha {
-    display: none !important;
-  }
-  .vc-chrome-body {
-    padding: 0px !important;
-  }
-  .vc-chrome-color-wrap {
-    display: none !important;
-  }
-  .vc-chrome-fields-wrap {
-    display: none !important;
-  }
-  .vc-chrome-hue-wrap {
-    height: 100% !important;
-  }
-  .vc-chrome-saturation-wrap {
-    display: none !important;
-  }
-  .vc-chrome-sliders {
-    height: 50px !important;
-  }
-  .vc-hue-picker {
-    margin-top: 2px !important;
-    height: 50px !important;
-  }
 }
 </style>

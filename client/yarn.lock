@@ -729,6 +729,24 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@radial-color-picker/color-wheel@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@radial-color-picker/color-wheel/-/color-wheel-2.2.0.tgz#a8f2456f141e91307d39433d4cd545b410059348"
+  integrity sha512-RBRg/4aebvEiTIe1YUBUq1IncaCPGGRk1L6AJtmJgymjQn7BAiceGQ2l3eC2vrXgubk+eYt+Ih5OoJeR41PosA==
+
+"@radial-color-picker/rotator@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@radial-color-picker/rotator/-/rotator-2.1.0.tgz#67b3e3f29fafa61ad449e6d6d08ae0bb248fe87a"
+  integrity sha512-uJvegbpmpFL7hZL9wTDKtHBcO5ZhUmGs5cRJcZZ7FrQLYiVxMpqbKPy6xBg2MUW6gkzIH5Z0M74hNzFrC/uYYg==
+
+"@radial-color-picker/vue-color-picker@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@radial-color-picker/vue-color-picker/-/vue-color-picker-2.3.0.tgz#51cd67203e2454933a70774294361a5cf2c35b14"
+  integrity sha512-4z9OW7m7osCofBZQIHoVw/UV51pGZe4PQPTi0u89irmLNW43BhxF//nPnPJNDLQtINeCk5RzEXzmy0f1dteowA==
+  dependencies:
+    "@radial-color-picker/color-wheel" "2.2.0"
+    "@radial-color-picker/rotator" "2.1.0"
+
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.7.1.tgz#706f64bcb4a8b9642b48ae3ace444c70334d615d"
@@ -2028,11 +2046,6 @@ circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
-
-clamp@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
-  integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -5016,11 +5029,6 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
-lodash.throttle@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
-
 lodash.transform@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.transform/-/lodash.transform-4.6.0.tgz#12306422f63324aed8483d3f38332b5f670547a0"
@@ -5108,11 +5116,6 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
-
-material-colors@^1.0.0:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
-  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -7758,11 +7761,6 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tinycolor2@^1.1.2:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
-  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -8106,16 +8104,6 @@ vue-cli-plugin-style-resources-loader@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-style-resources-loader/-/vue-cli-plugin-style-resources-loader-0.1.3.tgz#0fed01f429ba4af2f4265161dbeab9e9d233e810"
   integrity sha512-yUu71+z45AII83QBjL0H5qNumjdnKoMR+2QicP0GCF7nNqCQ8hN4TK7lcYpC9eZrzljZ+Vt8KPhyhMHkvmyTxw==
-
-vue-color@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/vue-color/-/vue-color-2.7.0.tgz#31e898370a5786fd6c3007388cb7242db6ba6988"
-  integrity sha512-fak9oPRL3BsYtakTGmWIS2yNRppRYNlMgGGq78CMH34ipU8fLgi/bT9JiSPcscpdTNLGracuOFuZ8OFeml+SQQ==
-  dependencies:
-    clamp "^1.0.1"
-    lodash.throttle "^4.0.0"
-    material-colors "^1.0.0"
-    tinycolor2 "^1.1.2"
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
