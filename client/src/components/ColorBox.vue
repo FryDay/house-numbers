@@ -1,6 +1,6 @@
 <template>
-  <div class="colorBox" :style="{'background-color':color}">
-    <h2 :style="{'color':oppColor}">{{start}} - {{end}}</h2>
+  <div class="colorBox" :style="{'background-color':hex}">
+    <h1 :style="{'color':oppHex}">{{start}} - {{end}}</h1>
   </div>
 </template>
 
@@ -8,11 +8,11 @@
 export default {
   name: 'colorBox',
   props: {
-    color: {
+    hex: {
       type: String,
       required: true
     },
-    oppColor: {
+    oppHex: {
       type: String,
       required: true
     },
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-h2 {
+h1 {
   margin: auto;
 }
 .colorBox {

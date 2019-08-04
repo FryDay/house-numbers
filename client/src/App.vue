@@ -1,11 +1,6 @@
 <template>
-  <div id="app">
-    <ColorBox
-      :color="currentColor"
-      :oppColor="oppositeColor"
-      :start="currentStartTime"
-      :end="currentEndTime"
-    />
+  <div id="app" :style="{'background-color':currentHex}">
+    <ColorBox :hex="currentHex" :oppHex="oppositeHex" :start="currentStart" :end="currentEnd" />
     <color-picker v-bind="hsl" @change="changeColor" @input="updateHSL"></color-picker>
   </div>
 </template>
@@ -30,10 +25,10 @@ export default {
   },
   data() {
     return {
-      currentColor: '',
-      oppositeColor: '',
-      currentStartTime: '',
-      currentEndTime: '',
+      currentHex: '',
+      oppositeHex: '',
+      currentStart: '',
+      currentEnd: '',
       hsl: {
         hue: 0,
         variant: 'persistent'
@@ -44,27 +39,27 @@ export default {
     async fetchColor() {
       const { data } = await ColorRepository.get()
 
-      this.currentColor = data.hex
-      this.oppositeColor = data.xeh
+      this.hsl.hue = data.hue
+      this.currentHex = data.hex
+      this.oppositeHex = data.xeh
     },
     async fetchTime() {
       const { data } = await TimeRepository.get()
 
-      this.currentStartTime = data.start
-      this.currentEndTime = data.end
+      this.currentStart = data.start
+      this.currentEnd = data.end
     },
     updateHSL(hue) {
       this.hsl.hue = hue
     },
     changeColor() {
-      this.updateValue(this.hsl.hue)
+      this.updateHue(this.hsl.hue)
     },
-    async updateValue(value) {
-      console.log(value.toFixed(0))
-      const { data } = await ColorRepository.post({ hue: value.toFixed(0) })
+    async updateHue(hue) {
+      const { data } = await ColorRepository.post({ hue: hue.toFixed(0) })
 
-      this.currentColor = data.hex
-      this.oppositeColor = data.xeh
+      this.currentHex = data.hex
+      this.oppositeHex = data.xeh
     }
   }
 }
@@ -85,8 +80,6 @@ html {
 }
 #app {
   align-items: center;
-  background-color: #a9a9a9;
-  color: #2c3e50;
   display: flex;
   flex-flow: column;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -97,5 +90,8 @@ html {
   margin: 0 !important;
   text-align: center;
   width: 100% !important;
+}
+.rcp {
+  margin-bottom: 6px;
 }
 </style>
