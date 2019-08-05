@@ -12,7 +12,7 @@ import (
 
 const (
 	ledCount   = 7
-	brightness = 128
+	brightness = 255
 )
 
 var (
