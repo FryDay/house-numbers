@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 
@@ -28,5 +27,12 @@ func setColor(hex string) {
 	hex = strings.TrimPrefix(hex, "#")
 	dec, _ := strconv.ParseUint(fmt.Sprintf("0x%s", hex), 0, 32)
 
-	log.Printf("Color set to Hex: %s, Dec: %d\n", hex, dec)
+	for led := 0; led < ledCount; led++ {
+		neopixel.Leds(0)[led] = uint32(dec)
+	}
+
+	if err := neopixel.Render(); err != nil {
+		// TODO: Handle this gracefully
+		panic(err)
+	}
 }
