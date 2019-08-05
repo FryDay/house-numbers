@@ -7,13 +7,24 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
+)
+
+const (
+	ledCount   = 7
+	brightness = 128
 )
 
 var (
 	currentColor = NewColor(0)
+	neopixel     *ws2811.WS2811
 )
 
 func main() {
+	if neopixel != nil {
+		defer neopixel.Fini()
+	}
+
 	router := mux.NewRouter()
 
 	router.HandleFunc("/color", getColor).Methods(http.MethodGet)
@@ -39,6 +50,8 @@ func postColor(w http.ResponseWriter, req *http.Request) {
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(currentColor)
+
+	go setColor(currentColor.Hex)
 }
 
 func getTime(w http.ResponseWriter, req *http.Request) {
