@@ -5,8 +5,22 @@
 </template>
 
 <script>
+import { RepositoryFactory } from '../repositoryFactory'
+
+const TimeRepository = RepositoryFactory.get('time')
+
 export default {
   name: 'colorBox',
+  components: {},
+  created() {
+    this.fetchTime()
+  },
+  data() {
+    return {
+      start: '',
+      end: ''
+    }
+  },
   props: {
     hex: {
       type: String,
@@ -15,14 +29,14 @@ export default {
     oppHex: {
       type: String,
       required: true
-    },
-    start: {
-      type: String,
-      required: true
-    },
-    end: {
-      type: String,
-      required: true
+    }
+  },
+  methods: {
+    async fetchTime() {
+      const { data } = await TimeRepository.get()
+
+      this.currentStart = data.start
+      this.currentEnd = data.end
     }
   }
 }

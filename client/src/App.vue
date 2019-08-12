@@ -1,6 +1,6 @@
 <template>
   <div id="app" :style="{'background-color':currentHex}">
-    <ColorBox :hex="currentHex" :oppHex="oppositeHex" :start="currentStart" :end="currentEnd" />
+    <ColorBox :hex="currentHex" :oppHex="oppositeHex" />
     <color-picker v-bind="hsl" @change="changeColor" @input="updateHSL"></color-picker>
   </div>
 </template>
@@ -11,7 +11,6 @@ import ColorPicker from '@radial-color-picker/vue-color-picker'
 import { RepositoryFactory } from './repositoryFactory'
 
 const ColorRepository = RepositoryFactory.get('color')
-const TimeRepository = RepositoryFactory.get('time')
 
 export default {
   name: 'app',
@@ -21,14 +20,11 @@ export default {
   },
   created() {
     this.fetchColor()
-    this.fetchTime()
   },
   data() {
     return {
       currentHex: '',
       oppositeHex: '',
-      currentStart: '',
-      currentEnd: '',
       hsl: {
         hue: 0,
         variant: 'persistent'
@@ -42,12 +38,6 @@ export default {
       this.hsl.hue = data.hue
       this.currentHex = data.hex
       this.oppositeHex = data.xeh
-    },
-    async fetchTime() {
-      const { data } = await TimeRepository.get()
-
-      this.currentStart = data.start
-      this.currentEnd = data.end
     },
     updateHSL(hue) {
       this.hsl.hue = hue
