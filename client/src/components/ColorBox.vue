@@ -35,8 +35,8 @@ export default {
     async fetchTime() {
       const { data } = await TimeRepository.get()
 
-      this.currentStart = data.start
-      this.currentEnd = data.end
+      this.start = data.start
+      this.end = data.end
     }
   }
 }
