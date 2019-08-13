@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 )
@@ -45,6 +44,5 @@ func NewSunriseSunset() *SunriseSunset {
 	sunriseSunset.Sunrise = sunriseSunset.Sunrise.In(location).Add(1 * time.Hour)
 	sunriseSunset.Sunset = sunriseSunset.Sunset.In(location).Add(-1 * time.Hour)
 
-	log.Println(sunriseSunset)
 	return sunriseSunset
 }

@@ -38,3 +38,14 @@ func setColor(hex string) {
 		panic(err)
 	}
 }
+
+func unsetColor() {
+	for led := 0; led < ledCount; led++ {
+		neopixel.Leds(0)[led] = 0
+	}
+
+	if err := neopixel.Render(); err != nil {
+		// TODO: Handle this gracefully
+		panic(err)
+	}
+}

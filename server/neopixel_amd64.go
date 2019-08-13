@@ -13,3 +13,7 @@ func setColor(hex string) {
 
 	log.Printf("Color set to Hex: %s, Dec: %d\n", hex, dec)
 }
+
+func unsetColor() {
+	log.Printf("LEDs turned off")
+}
