@@ -13,7 +13,7 @@ type Time struct {
 // NewTime ...
 func NewTime(start, end time.Time) *Time {
 	return &Time{
-		Start: start.Format("3:04 PM"),
-		End:   end.Format("3:04 PM"),
+		Start: start.Format("15:04"),
+		End:   end.Format("15:04"),
 	}
 }

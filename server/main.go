@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
 	ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
@@ -13,10 +12,14 @@ import (
 const (
 	ledCount   = 7
 	brightness = 255
+	lat        = 44.280339
+	lng        = -88.4018744
+	loc        = "America/Chicago"
 )
 
 var (
 	currentColor = NewColor(0)
+	currentTime  = NewSunriseSunset()
 	neopixel     *ws2811.WS2811
 )
 
@@ -31,7 +34,6 @@ func main() {
 	router.HandleFunc("/color", postColor).Methods(http.MethodPost)
 
 	router.HandleFunc("/time", getTime).Methods(http.MethodGet)
-	router.HandleFunc("/time", postTime).Methods(http.MethodPost)
 
 	log.Println("Listening on port 8040...")
 	log.Fatal(http.ListenAndServe(":8040", router))
@@ -58,10 +60,6 @@ func getTime(w http.ResponseWriter, req *http.Request) {
 	log.Println("GET /time")
 
 	w.Header().Add("Access-Control-Allow-Origin", "*")
-	time := NewTime(time.Now(), time.Now().Add(time.Hour))
+	time := NewTime(currentTime.Sunrise, currentTime.Sunset)
 	json.NewEncoder(w).Encode(time)
-}
-
-func postTime(w http.ResponseWriter, req *http.Request) {
-	log.Println("POST /time")
 }
