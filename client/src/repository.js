@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://housenumbers:8040',
+  baseURL: process.env.VUE_APP_API_URL,
   headers: {
     'content-type': 'application/x-www-form-urlencoded'
   },

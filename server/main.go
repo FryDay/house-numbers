@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"log"
 	"net/http"
 	"time"
@@ -19,6 +20,7 @@ const (
 )
 
 var (
+	config       = new(Config)
 	ledsOn       = false
 	currentColor = NewColor(0)
 	currentTime  = NewSunriseSunset()
@@ -26,6 +28,11 @@ var (
 )
 
 func main() {
+	var configPath string
+	flag.StringVar(&configPath, "config", "config/dev.toml", "config path")
+	flag.Parse()
+	config = NewConfig(configPath)
+
 	if neopixel != nil {
 		defer neopixel.Fini()
 		unsetColor()
@@ -65,7 +72,7 @@ func main() {
 func getColor(w http.ResponseWriter, req *http.Request) {
 	log.Println("GET /color")
 
-	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Origin", config.URL)
 	json.NewEncoder(w).Encode(currentColor)
 }
 
@@ -73,7 +80,7 @@ func postColor(w http.ResponseWriter, req *http.Request) {
 	log.Println("POST /color")
 	json.NewDecoder(req.Body).Decode(currentColor)
 
-	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Origin", config.URL)
 	json.NewEncoder(w).Encode(currentColor)
 
 	if ledsOn {
@@ -84,7 +91,7 @@ func postColor(w http.ResponseWriter, req *http.Request) {
 func getTime(w http.ResponseWriter, req *http.Request) {
 	log.Println("GET /time")
 
-	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Origin", config.URL)
 	time := NewTime(currentTime.Sunrise, currentTime.Sunset)
 	json.NewEncoder(w).Encode(time)
 }

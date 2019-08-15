@@ -13,6 +13,7 @@ FROM balenalib/raspberry-pi-golang:latest
 RUN [ "cross-build-start" ]
 COPY --from=builder /tmp/rpi_ws281x/*.a /usr/local/lib/
 COPY --from=builder /tmp/rpi_ws281x/*.h /usr/local/include/
+RUN go get -v -u github.com/spf13/viper
 RUN go get -v -u github.com/rpi-ws281x/rpi-ws281x-go
 RUN go get -v -u github.com/gorilla/mux
 RUN [ "cross-build-end" ]
