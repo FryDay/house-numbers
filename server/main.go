@@ -28,6 +28,7 @@ var (
 func main() {
 	if neopixel != nil {
 		defer neopixel.Fini()
+		unsetColor()
 	}
 
 	router := mux.NewRouter()
