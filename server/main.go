@@ -21,9 +21,10 @@ const (
 
 var (
 	config       = new(Config)
-	ledsOn       = false
 	currentColor = NewColor(0)
 	currentTime  = NewSunriseSunset()
+	forceOn      = NewForceOn()
+	ledsOnChan   = make(chan bool)
 	neopixel     *ws2811.WS2811
 )
 
@@ -43,23 +44,46 @@ func main() {
 	router.HandleFunc("/color", getColor).Methods(http.MethodGet)
 	router.HandleFunc("/color", postColor).Methods(http.MethodPost)
 
+	router.HandleFunc("/force", getForceOn).Methods(http.MethodGet)
+	router.HandleFunc("/force", postForceOn).Methods(http.MethodPost)
+
 	router.HandleFunc("/time", getTime).Methods(http.MethodGet)
 
-	ticker := time.NewTicker(1 * time.Minute)
 	go func() {
+		ticker := time.NewTicker(1 * time.Minute)
+
 		for t := range ticker.C {
 			if t.Day() != currentTime.Sunrise.Day() {
 				currentTime = NewSunriseSunset()
 			}
+
 			if t.After(currentTime.Sunrise) && t.Before(currentTime.Sunset) {
-				if ledsOn {
-					go unsetColor()
-					ledsOn = false
+				ledsOnChan <- false
+			} else {
+				ledsOnChan <- true
+			}
+		}
+	}()
+
+	go func() {
+		on := false
+		lastHex := ""
+
+		for {
+			turnOn := <-ledsOnChan
+			if turnOn {
+				if !on ||
+					(on && lastHex != currentColor.Hex) ||
+					(!on && forceOn.On) {
+					setColor(currentColor.Hex)
+					lastHex = currentColor.Hex
+					on = true
 				}
 			} else {
-				if !ledsOn {
-					go setColor(currentColor.Hex)
-					ledsOn = true
+				if on && !forceOn.On {
+					unsetColor()
+					lastHex = ""
+					on = false
 				}
 			}
 		}
@@ -76,16 +100,28 @@ func getColor(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(currentColor)
 }
 
+func getForceOn(w http.ResponseWriter, req *http.Request) {
+	log.Println("GET /force")
+
+	w.Header().Add("Access-Control-Allow-Origin", config.URL)
+	json.NewEncoder(w).Encode(forceOn)
+}
+
 func postColor(w http.ResponseWriter, req *http.Request) {
 	log.Println("POST /color")
 	json.NewDecoder(req.Body).Decode(currentColor)
 
 	w.Header().Add("Access-Control-Allow-Origin", config.URL)
 	json.NewEncoder(w).Encode(currentColor)
+}
 
-	if ledsOn {
-		go setColor(currentColor.Hex)
-	}
+func postForceOn(w http.ResponseWriter, req *http.Request) {
+	log.Println("POST /force")
+
+	w.Header().Add("Access-Control-Allow-Origin", config.URL)
+	json.NewEncoder(w).Encode(forceOn)
+
+	ledsOnChan <- forceOn.On
 }
 
 func getTime(w http.ResponseWriter, req *http.Request) {
