@@ -57,11 +57,7 @@ func main() {
 				currentTime = NewSunriseSunset()
 			}
 
-			if t.After(currentTime.Sunrise) && t.Before(currentTime.Sunset) {
-				ledsOnChan <- false
-			} else {
-				ledsOnChan <- true
-			}
+			ledsOnChan <- (t.Before(currentTime.Sunrise) && t.After(currentTime.Sunset))
 		}
 	}()
 
