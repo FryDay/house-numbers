@@ -50,14 +50,14 @@ func main() {
 	router.HandleFunc("/time", getTime).Methods(http.MethodGet)
 
 	go func() {
-		ticker := time.NewTicker(1 * time.Minute)
+		ticker := time.NewTicker(1 * time.Second)
 
 		for t := range ticker.C {
 			if t.Day() != currentTime.Sunrise.Day() {
 				currentTime = NewSunriseSunset()
 			}
 
-			ledsOnChan <- (t.Before(currentTime.Sunrise) && t.After(currentTime.Sunset))
+			ledsOnChan <- (t.Before(currentTime.Sunrise) || t.After(currentTime.Sunset))
 		}
 	}()
 
